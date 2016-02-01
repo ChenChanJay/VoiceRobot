@@ -1,12 +1,14 @@
 package com.jaychan.voicerobot;
 
+import java.io.Serializable;
+
 
 /**
  * 聊天信息的对象
  * @author Koma
  *
  */
-public class ChatBean {
+public class ChatBean implements Serializable{
 
 	public String text ;   //内容
 	public boolean isAsker ;  //true表示提问者,否则是回答者

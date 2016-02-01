@@ -28,14 +28,14 @@
             android:textSize="18sp" />
 
         <Button
-            android:onClick="changeLanguage"
+            android:onClick="showChooseDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:background="@null"
-            android:text="语言"
+            android:text="操作"
             android:textColor="#fff"
             android:textSize="20sp" />
     </RelativeLayout>
