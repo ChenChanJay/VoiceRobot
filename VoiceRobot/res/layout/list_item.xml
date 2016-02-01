@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/rl_ask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp"
+        android:layout_marginTop="10dp" >
+
+        <TextView
+            android:id="@+id/tv_ask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/asker_bubble"
+            android:gravity="center"
+            android:maxWidth="200dp"
+            android:text="你吃饭了"
+            android:textColor="#000"
+            android:textSize="16sp" />
+
+        <com.jaychan.voicerobot.view.RoundImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_ask"
+            android:scaleType="centerCrop"
+            android:src="@drawable/my" />
+    </RelativeLayout>
+
+    <com.jaychan.voicerobot.view.RoundImageView
+        android:id="@+id/icon_answer"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/rl_ask"
+        android:layout_margin="5dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/answer" />
+
+    <LinearLayout
+        android:id="@+id/ll_answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_ask"
+        android:layout_marginRight="80dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/icon_answer"
+        android:background="@drawable/answer_bubble"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tv_answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:maxWidth="200dp"
+            android:text="吃了"
+            android:textColor="#000"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/iv_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/m"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</RelativeLayout>
