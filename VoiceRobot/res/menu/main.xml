@@ -1,11 +1,32 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.jaychan.voicerobot.MainActivity" >
+    xmlns:chanjay="http://schemas.android.com/apk/res-auto" >
 
     <item
-        android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="操作"
+        android:visible="true"
+        chanjay:showAsAction="always">
+      
+        <menu>
+        <item
+            android:id="@+id/clean"
+            android:orderInCategory="101"
+            android:title="清除聊天记录"
+            android:visible="true"
+            chanjay:showAsAction="ifRoom" />
+        <item
+            android:id="@+id/chooseLan"
+            android:orderInCategory="102"
+            android:title="发音语言"
+            android:visible="true"
+            chanjay:showAsAction="ifRoom" />
+        <item
+            android:id="@+id/exit"
+            android:orderInCategory="103"
+            android:title="退出"
+            android:visible="true"
+            chanjay:showAsAction="ifRoom" />
+        </menu>
+    </item>
 
 </menu>

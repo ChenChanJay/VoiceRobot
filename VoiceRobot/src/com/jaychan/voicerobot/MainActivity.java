@@ -1,8 +1,6 @@
 package com.jaychan.voicerobot;
 
 import java.io.IOException;
-import java.io.Serializable;
-import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -11,11 +9,11 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -23,7 +21,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -31,10 +28,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,7 +55,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity {
 
 	@ViewInject(R.id.lv_list)
 	private ListView lvList;
@@ -103,7 +98,6 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 
 		options.add("清除聊天记录");
@@ -165,6 +159,34 @@ public class MainActivity extends Activity {
 		});
 
 	}
+
+	public boolean onCreateOptionsMenu(android.view.Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return super.onCreateOptionsMenu(menu);
+	};
+
+	public boolean onOptionsItemSelected(android.view.MenuItem item) {
+
+		switch (item.getOrder()) {
+
+		case 101:
+			cleanRecord();
+			break;
+
+		case 102:
+			showChooseDialog();
+			break;
+
+		case 103:
+			finish();
+			break;
+
+		default:
+			break;
+		}
+
+		return super.onOptionsItemSelected(item);
+	};
 
 	StringBuffer mTextBuffer = new StringBuffer();
 
@@ -468,8 +490,8 @@ public class MainActivity extends Activity {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-		String[] items = new String[] { "普通话(男)", "普通话(女)", "粤语", "湖南话", "四川话",
-				"不发音" };
+		String[] items = new String[] { "普通话(男)", "普通话(女)", "普通话(台湾)", "粤语",
+				"湖南话", "四川话",  "河南话", "陕西话", "不发音" };
 
 		builder.setTitle("机器人发音语言");
 		builder.setSingleChoiceItems(items, mCurrentItem,
@@ -498,21 +520,37 @@ public class MainActivity extends Activity {
 					break;
 
 				case 2:
-					speaker = "vixm";
+					speaker = "vixl";
 					read = true;
 					break;
 
 				case 3:
-					speaker = "vixqa";
+					speaker = "vixm";
 					read = true;
 					break;
 
 				case 4:
-					speaker = "vixr";
+					speaker = "vixqa";
 					read = true;
 					break;
 
 				case 5:
+					speaker = "vixr";
+					read = true;
+					break;
+
+
+				case 6:
+					speaker = "vixk";
+					read = true;
+					break;
+
+				case 7:
+					speaker = "vixying";
+					read = true;
+					break;
+
+				case 8:
 					read = false;
 					break;
 
@@ -534,67 +572,21 @@ public class MainActivity extends Activity {
 	private ArrayList<String> options = new ArrayList<String>();
 
 	/**
-	 * 显示操作的Dialog
-	 */
-	public void showChooseDialog(View v) {
-		dialog = new Dialog(this, R.style.dialog);
-		View view = View.inflate(this, R.layout.dialog_option, null);
-
-		TextView tvClean = (TextView) view.findViewById(R.id.tv_clean) ;
-		TextView tvChooseLan = (TextView) view.findViewById(R.id.tv_chooseLan);
-		TextView tvExit = (TextView) view.findViewById(R.id.tv_exit);
-		
-		tvClean.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-                  cleanRecord() ;
-                  dialog.dismiss() ;
-			}
-		}) ;
-		
-		tvChooseLan.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-                 showChooseDialog() ;
-                 dialog.dismiss() ;
-			}
-		}) ;
-		
-		tvExit.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish() ;
-			}
-		});
-
-		
-		dialog.setContentView(view) ;
-		dialog.show() ;
-			
-	}
-	
-	/**
 	 * 清除聊天记录
 	 */
-	public void cleanRecord(){
-		AlertDialog.Builder builder = new AlertDialog.Builder(
-				MainActivity.this);
-		builder.setTitle("提示")
-				.setMessage("是否清楚聊天记录")
+	public void cleanRecord() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+		builder.setTitle("提示").setMessage("是否清楚聊天记录")
 				.setNegativeButton("取消", null)
-				.setPositiveButton("确定",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
-								mChatList.clear();
-								mAdapter.notifyDataSetChanged();
-							}
-						});
+				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						mChatList.clear();
+						mAdapter.notifyDataSetChanged();
+					}
+				});
 
 		builder.show();
 	}
-
-
 
 	@Override
 	protected void onPause() {
